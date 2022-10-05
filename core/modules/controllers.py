@@ -7,7 +7,6 @@ def index_page():
 
 # add data ..
 @app.route('/add-product',methods=["POST","GET"])
-
 def add_data():
     if request.method == 'POST':
         try:
@@ -42,3 +41,7 @@ def edit_page(id):
         return redirect(url_for('index_page'))
     get_data = data_bcg.query.filter_by(id=id).first()
     return render_template('edit_page.html',name=get_data.name,sku=get_data.sku)
+
+
+def query_table(id):
+    return "querying id " + id
