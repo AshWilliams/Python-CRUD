@@ -1,6 +1,15 @@
 from core import *
 from core.modules.data import *
 
+
+@app.before_first_request
+def create_tables():
+    print("populating tables")
+    from core.modules.data import data_bcg
+    db.create_all()
+    db.session.commit()
+    
+
 @app.route('/')
 def index_page():
     return render_template('index.html',data=enumerate(data_bcg.query.all(),1))
@@ -42,6 +51,3 @@ def edit_page(id):
     get_data = data_bcg.query.filter_by(id=id).first()
     return render_template('edit_page.html',name=get_data.name,sku=get_data.sku)
 
-
-def query_table(id):
-    return "querying id " + id
